@@ -1,9 +1,9 @@
 # Enter_challenge
 
-#Context
+## Context
 Analysis is based on data of orders and appointments of customers in the timeframe from Sep 2023 to Mar 2024 with 78k observations.
 
-#Problem Statement
+## Problem Statement
 What business actions can be taken based on the ordering process at Enter?
 
 ## Project setup
