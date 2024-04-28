@@ -1,8 +1,11 @@
 COPY (
-SELECT c.customer_id, c.postal_code
-FROM './input_data/orders.csv' c
-LEFT JOIN(
-  SELECT customer_id, MAX(order_date) AS latest_order
-  FROM './input_data/orders.csv'
-  GROUP BY customer_id) latest ON c.customer_id = latest.customer_id AND c.order_date=latest.latest_order)
-  TO 'customers_table.csv' (HEADER, DELIMITER ',')
+  SELECT
+    c.customer_id,
+    c.postal_code,
+    FLOOR(c.postal_code / 10000) AS postal_code_group
+  FROM './input_data/orders.csv' c
+  WHERE customer_id IS NOT NULL
+  -- Force filter out any duplicates on customer_id (take only most recent reference)
+  QUALIFY ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) = 1
+)
+TO 'customers_table.csv' (HEADER, DELIMITER ',')

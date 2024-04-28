@@ -10,4 +10,5 @@ RUN pip install --quiet --no-cache-dir -r requirements.txt && \
 
 COPY . /app/
 ENV PYTHONPATH=/app/src
+RUN python src/preparation.py
 CMD ["jupyter", "notebook", "--allow-root", "--ip='*'", "--NotebookApp.token='token'"]
